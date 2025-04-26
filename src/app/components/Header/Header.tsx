@@ -7,10 +7,7 @@ import { FaCaretRight, FaRegQuestionCircle } from "react-icons/fa";
 import { IoMdApps } from "react-icons/io";
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
 
   return (
