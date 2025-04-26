@@ -1,7 +1,41 @@
+import Image from "next/image";
+import Grid from "./components/Grid/Grid";
+
 export default async function Home() {
+  const skills = [
+    {
+      image: "/dribbble-square.png",
+      title: "Tipo de Quadra",
+      description: "Society",
+    },
+    {
+      image: "/align-left.png",
+      title: "Nível",
+      description: "Semi-Profissional",
+    },
+    {
+      image: "/trophy.png",
+      title: "Vitórias",
+      description: "345",
+    },
+  ];
+
   return (
-    <div className="container mx-auto">
-      <h1 className="text-3xl">TESTE</h1>
-    </div>
+    <main>
+      <section className="bg-primary py-5">
+        <div className="container max-w-4xl mx-auto px-4">
+          <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-2 lg:max-w-2xl gap-y-4">
+            {skills.map((item, index) => (
+              <Grid
+                key={index}
+                image={item.image}
+                title={item.title}
+                description={item.description}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
