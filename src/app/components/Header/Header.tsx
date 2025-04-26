@@ -31,7 +31,7 @@ export default function Header() {
         </div>
       </div>
       <div className="container mx-auto">
-        <div className="flex items-center justify-between py-8 lg:px-0 px-4">
+        <div className="flex items-center justify-between lg:px-0 px-4">
           <div className="flex gap-2 items-center">
             <Image
               src="/sensedia.svg"
