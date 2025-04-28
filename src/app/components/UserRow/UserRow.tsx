@@ -1,58 +1,130 @@
+"use client";
 import { useAlbums } from "@/app/hooks/useAlbums";
 import { usePosts } from "@/app/hooks/usePosts";
 import { useAdditionalUserData } from "@/app/hooks/useAdditionalUserData";
+import { useDeleteUser } from "@/app/hooks/useDeleteUser";
+import { useState } from "react";
+import { FiTrash2 } from "react-icons/fi";
+import { DeleteModal } from "../Modal/DeleteModal";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface UserRowProps {
   id: string;
   name: string;
   email: string;
+  onUserDeleted: (userId: string) => void;
 }
 
-export default function UserRow({ id, name, email }: UserRowProps) {
+export default function UserRow({
+  id,
+  name,
+  email,
+  onUserDeleted,
+}: UserRowProps) {
   const { posts, postsError } = usePosts(id);
   const { albums, albumsError } = useAlbums(id);
   const { city, weekdays, loading, error } = useAdditionalUserData(id);
+  const { deleteUser, isDeleting } = useDeleteUser();
+
+  const [showDelete, setShowDelete] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleDelete = async () => {
+    const success = await deleteUser(id);
+    if (success) {
+      onUserDeleted(id);
+      toast.success(`Usuário deletado com sucesso!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      toast.error(`Falha ao deletar o usuário!`, {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    setShowModal(false);
+  };
 
   const renderData = (
     value: string | number,
     isLoading: boolean,
     error: Error | null
   ) => {
-    if (isLoading) return "Carregando...";
-    if (error) return "Erro";
+    if (isLoading) return <span className="text-gray-400">Carregando...</span>;
+    if (error) return <span className="text-red-400">Erro</span>;
     return value;
   };
 
   return (
     <div
-      key={id}
-      className="bg-white border-b border-gray-200 text-gray-75 flex flex-col md:flex-row py-4"
+      className="bg-white border-b border-gray-200 text-gray-75 flex flex-col md:flex-row py-4 relative group"
+      onMouseEnter={() => setShowDelete(true)}
+      onMouseLeave={() => setShowDelete(false)}
     >
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6 font-bold truncate">
         <span className="md:hidden font-semibold">User:</span> {id}
       </div>
+
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-2/6 truncate pr-2">
         <span className="md:hidden font-semibold">Nome:</span> {name}
       </div>
+
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-2/6 truncate pr-2">
         <span className="md:hidden font-semibold">E-mail:</span> {email}
       </div>
+
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
         <span className="md:hidden font-semibold">Cidade:</span>
         {renderData(city, loading, error)}
       </div>
+
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
         <span className="md:hidden font-semibold">Dias:</span>
         {renderData(weekdays, loading, error)}
       </div>
+
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/12 text-center">
         <span className="md:hidden font-semibold">Posts:</span>
-        {postsError ? "Erro" : posts}
+        {postsError ? <span className="text-red-400">Erro</span> : posts}
       </div>
+
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/12 text-center">
         <span className="md:hidden font-semibold">Álbuns:</span>
-        {albumsError ? "Erro" : albums}
+        {albumsError ? <span className="text-red-400">Erro</span> : albums}
       </div>
+
+      {/* Icon Trash */}
+      {showDelete && (
+        <button
+          onClick={() => setShowModal(true)}
+          className="p-3 flex justify-center items-center absolute right-0 top-12 transform -translate-y-1/2 text-white transition-colors cursor-pointer bg-primary"
+          aria-label="Excluir usuário"
+          disabled={isDeleting}
+        >
+          <FiTrash2 size={18} />
+        </button>
+      )}
+
+      {/* Modal Delete */}
+      <DeleteModal
+        isOpen={showModal}
+        userName={name}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleDelete}
+        isLoading={isDeleting}
+      />
     </div>
   );
 }

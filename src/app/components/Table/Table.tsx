@@ -5,8 +5,12 @@ import { useUsers } from "@/app/hooks/useUsers";
 import UserRow from "../UserRow/UserRow";
 
 export default function Table() {
-  // Get users
-  const { users, loading, error } = useUsers();
+  const { users, loading, error, refetch } = useUsers();
+
+  const handleUserDeleted = () => {
+    // Atualiza a lista chamando refetch para pegar os dados mais recentes
+    refetch();
+  };
 
   if (loading) {
     return <p>Carregando...</p>;
@@ -32,9 +36,15 @@ export default function Table() {
             <div className="w-1/12 py-3 text-center">Álbuns</div>
           </div>
 
-          {/* Verify if there are users */}
+          {/* Verifica se há usuários e mapeia */}
           {users.length > 0 ? (
-            users.map((user) => <UserRow key={user.id} {...user} />)
+            users.map((user) => (
+              <UserRow
+                key={user.id}
+                {...user}
+                onUserDeleted={handleUserDeleted}
+              />
+            ))
           ) : (
             <p>Nenhum usuário encontrado.</p>
           )}
