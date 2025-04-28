@@ -11,7 +11,7 @@ export default function Header() {
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
 
   return (
-    <header>
+    <header className="fixed top-0 z-50 w-full h-44 bg-white">
       <div className="bg-gray-950 px-4 py-6">
         <div className="container mx-auto">
           <Link href="/" className="flex flex-col">

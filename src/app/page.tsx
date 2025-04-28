@@ -21,7 +21,7 @@ export default async function Home() {
   ];
 
   return (
-    <main>
+    <main className="mt-44">
       <section className="bg-primary py-5">
         <div className="container max-w-5xl mx-auto px-4">
           <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-2 lg:max-w-2xl gap-y-4">
