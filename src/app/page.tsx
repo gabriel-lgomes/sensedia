@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Grid from "./components/Grid/Grid";
 import Table from "./components/Table/Table";
 
