@@ -1,7 +1,20 @@
+"use client";
 import React from "react";
 import Search from "../Search/Search";
+import { useUsers } from "@/app/hooks/useUsers";
+import UserRow from "../Row/Row";
 
 export default function Table() {
+  const { users, loading, error } = useUsers();
+
+  if (loading) {
+    return <p>Carregando...</p>;
+  }
+
+  if (error) {
+    return <p>Erro ao carregar usuários: {error.message}</p>;
+  }
+
   return (
     <section>
       <h2 className="text-2xl">Usuários</h2>
@@ -10,39 +23,20 @@ export default function Table() {
         <div className="w-full">
           <div className="hidden md:flex text-sm text-gray-50 uppercase border-t border-b border-gray-25">
             <div className="w-1/6 py-3">User</div>
-            <div className="w-1/6 py-3">Nome</div>
-            <div className="w-1/6 py-3">E-mail</div>
+            <div className="w-2/6 py-3">Nome</div>
+            <div className="w-2/6 py-3">E-mail</div>
             <div className="w-1/6 py-3">Cidade</div>
             <div className="w-1/6 py-3">Dias da semana</div>
             <div className="w-1/12 py-3 text-center">Posts</div>
             <div className="w-1/12 py-3 text-center">Álbuns</div>
           </div>
 
-          <div className="bg-white border-b border-gray-200 text-gray-75 flex flex-col md:flex-row py-4">
-            <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6 font-bold">
-              <span className="md:hidden font-semibold">User:</span> Sonya64
-            </div>
-            <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
-              <span className="md:hidden font-semibold">Nome:</span> Mildred
-              Turner
-            </div>
-            <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
-              <span className="md:hidden font-semibold">E-mail:</span>{" "}
-              Loraine25@hotmail.com
-            </div>
-            <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
-              <span className="md:hidden font-semibold">Cidade:</span> Abraham
-            </div>
-            <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
-              <span className="md:hidden font-semibold">Dias:</span> Todos
-            </div>
-            <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/12 text-center">
-              <span className="md:hidden font-semibold">Posts:</span> 3
-            </div>
-            <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/12 text-center">
-              <span className="md:hidden font-semibold">Álbuns:</span> 2
-            </div>
-          </div>
+          {/* Verifica se há usuários e mapeia */}
+          {users.length > 0 ? (
+            users.map((user) => <UserRow key={user.id} {...user} />)
+          ) : (
+            <p>Nenhum usuário encontrado.</p>
+          )}
         </div>
       </div>
     </section>
