@@ -2,9 +2,10 @@
 import React from "react";
 import Search from "../Search/Search";
 import { useUsers } from "@/app/hooks/useUsers";
-import UserRow from "../Row/Row";
+import UserRow from "../UserRow/UserRow";
 
 export default function Table() {
+  // Get users
   const { users, loading, error } = useUsers();
 
   if (loading) {
@@ -31,7 +32,7 @@ export default function Table() {
             <div className="w-1/12 py-3 text-center">Álbuns</div>
           </div>
 
-          {/* Verifica se há usuários e mapeia */}
+          {/* Verify if there are users */}
           {users.length > 0 ? (
             users.map((user) => <UserRow key={user.id} {...user} />)
           ) : (
