@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
+import { ToastContainer } from "react-toastify";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="pt-BR">
       <body className={roboto.className}>
         <Header />
+        <ToastContainer />
         {children}
       </body>
     </html>
