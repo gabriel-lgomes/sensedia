@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Grid from "./components/Grid/Grid";
+import Table from "./components/Table/Table";
 
 export default async function Home() {
   const skills = [
@@ -23,7 +24,7 @@ export default async function Home() {
   return (
     <main>
       <section className="bg-primary py-5">
-        <div className="container max-w-4xl mx-auto px-4">
+        <div className="container max-w-5xl mx-auto px-4">
           <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-2 lg:max-w-2xl gap-y-4">
             {skills.map((item, index) => (
               <Grid
@@ -34,6 +35,11 @@ export default async function Home() {
               />
             ))}
           </div>
+        </div>
+      </section>
+      <section className="py-5">
+        <div className="container max-w-5xl mx-auto px-4">
+          <Table />
         </div>
       </section>
     </main>
