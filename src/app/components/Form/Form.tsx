@@ -7,8 +7,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useCreateUser } from "@/app/hooks/useCreateUser";
 import Button from "../Button/Button";
+import { IUser } from "@/app/interfaces/User";
 
-export default function Form() {
+interface FormProps {
+  onSuccess?: () => void;
+}
+
+export default function Form({ onSuccess }: FormProps) {
   const { mutateAsync: createUser, isPending } = useCreateUser();
 
   const {
@@ -28,12 +33,15 @@ export default function Form() {
     };
 
     try {
-      await createUser(newUser);
+      await createUser(newUser as Omit<IUser, "id">);
       toast.success(`Usuário ${data.name} criado com sucesso!`, {
         position: "top-right",
         autoClose: 3000,
       });
       reset();
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       console.error(error);
       toast.error("Falha ao criar o usuário!", {
