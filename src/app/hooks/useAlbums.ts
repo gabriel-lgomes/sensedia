@@ -1,4 +1,3 @@
-// hooks/useUserAlbums.ts
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { IAlbums } from "../interfaces/Albums";

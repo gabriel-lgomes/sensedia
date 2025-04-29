@@ -1,4 +1,3 @@
-// hooks/useCreateUser.ts
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { IUser } from "../interfaces/User";

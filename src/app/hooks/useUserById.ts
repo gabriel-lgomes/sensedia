@@ -1,4 +1,3 @@
-// hooks/useUserById.ts
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { IUser } from "../interfaces/User";
