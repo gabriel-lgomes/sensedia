@@ -18,7 +18,7 @@ export default function Checkbox({
           className={`
             w-full h-full border-2 rounded-md border-gray-300
             transition-colors
-            peer-checked:bg-primary-50 peer-checked:border-transparent
+            peer-checked:bg-primary-75 peer-checked:border-transparent
             flex items-center justify-center
             ${className ?? ""}
           `}
