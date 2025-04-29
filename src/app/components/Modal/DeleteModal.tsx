@@ -31,7 +31,7 @@ export function DeleteModal({
             <div>
               <h3 className="text-lg font-medium">Confirmar exclusão</h3>
               <p className="mt-2 text-gray-600">
-                Tem certeza que deseja bloquear o usuário{" "}
+                Tem certeza que deseja excluir o usuário{" "}
                 <strong>{userName}</strong>? Esta ação não pode ser desfeita.
               </p>
             </div>
