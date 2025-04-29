@@ -15,8 +15,12 @@ export default function Breadcrumb() {
 
   return (
     <div className="flex gap-2 items-center">
-      <Image src="/sensedia.svg" alt="Sensedia Logo" width={27} height={27} />
-      <h1 className="text-sm text-primary uppercase font-medium">Bem-vindo</h1>
+      <Link href="/" className="flex gap-2 items-center">
+        <Image src="/sensedia.svg" alt="Sensedia Logo" width={27} height={27} />
+        <h1 className="text-sm text-primary uppercase font-medium">
+          Bem-vindo
+        </h1>
+      </Link>
 
       {pathSegments.map((segment, index) => (
         <div key={index} className="flex items-center gap-2">
