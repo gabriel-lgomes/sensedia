@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
 import { ToastContainer } from "react-toastify";
+import { QueryProvider } from "./providers/QueryClientProvider";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={roboto.className}>
-        <Header />
-        <ToastContainer />
-        {children}
+        <QueryProvider>
+          <Header />
+          <ToastContainer />
+          {children}
+        </QueryProvider>
       </body>
     </html>
   );

@@ -1,7 +1,8 @@
+import Form from "./components/Form/Form";
 import Grid from "./components/Grid/Grid";
 import Table from "./components/Table/Table";
 
-export default async function Home() {
+export default function Home() {
   const skills = [
     {
       image: "/dribbble-square.png",
@@ -39,6 +40,11 @@ export default async function Home() {
       <section className="py-5">
         <div className="container max-w-5xl mx-auto px-4">
           <Table />
+        </div>
+      </section>
+      <section className="py-5">
+        <div className="container max-w-5xl mx-auto px-4">
+          <Form />
         </div>
       </section>
     </main>
