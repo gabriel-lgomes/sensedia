@@ -2,14 +2,33 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoMdApps } from "react-icons/io";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
 
 export default function Header() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
   const toggleUserMenu = () => setIsUserMenuOpen(!isUserMenuOpen);
+  const closeUserMenu = () => setIsUserMenuOpen(false);
+
+  // Close menu to escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeUserMenu();
+      }
+    };
+
+    if (isUserMenuOpen) {
+      document.addEventListener("keydown", handleKeyDown);
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isUserMenuOpen]);
 
   return (
     <header className="fixed top-0 z-50 w-full h-44 bg-white">
@@ -30,27 +49,21 @@ export default function Header() {
       </div>
       <div className="container mx-auto">
         <div className="flex items-center justify-between lg:px-0 px-4">
-          {/* Breadcrumb */}
           <Breadcrumb />
-          {/* Nav menu */}
           <div className="lg:flex items-center justify-end px-2 py-4 gap-8">
             <div className="lg:flex hidden gap-4">
-              <div>
-                <Link
-                  href="#"
-                  className="text-2xl text-gray-75 hover:text-primary transition-all"
-                >
-                  <FaRegQuestionCircle />
-                </Link>
-              </div>
-              <div>
-                <Link
-                  href="#"
-                  className="text-2xl text-gray-75 hover:text-primary transition-all"
-                >
-                  <IoMdApps />
-                </Link>
-              </div>
+              <Link
+                href="#"
+                className="text-2xl text-gray-75 hover:text-primary transition-all"
+              >
+                <FaRegQuestionCircle />
+              </Link>
+              <Link
+                href="#"
+                className="text-2xl text-gray-75 hover:text-primary transition-all"
+              >
+                <IoMdApps />
+              </Link>
             </div>
             <nav className="relative">
               <ul className="lg:flex lg:gap-4 items-center pl-1 transition-all border-l-2 border-gray-25">
@@ -68,41 +81,26 @@ export default function Header() {
                   </button>
                 </li>
               </ul>
-              {/* Submenu do usuário */}
               {isUserMenuOpen && (
                 <div className="absolute lg:-right-6 right-0 top-full mt-2 w-40 bg-gray-950 shadow-lg py-1 z-20">
                   <Link
-                    href="#"
+                    href="/user"
                     className="block px-4 py-2 text-sm text-gray-light hover:border-l-4 hover:border-primary"
-                    onClick={() => setIsUserMenuOpen(false)}
+                    onClick={closeUserMenu}
                   >
-                    Lista de amigos
+                    Usuários
                   </Link>
                   <Link
-                    href="#"
+                    href="/users/new"
                     className="block px-4 py-2 text-sm text-gray-light hover:border-l-4 hover:border-primary"
-                    onClick={() => setIsUserMenuOpen(false)}
+                    onClick={closeUserMenu}
                   >
-                    Artigos Salvos
-                  </Link>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-light hover:border-l-4 hover:border-primary"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  >
-                    Notificações
-                  </Link>
-                  <Link
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-light hover:border-l-4 hover:border-primary"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  >
-                    Preferências
+                    Criar usuário
                   </Link>
                   <Link
                     href="#"
                     className="block px-4 py-2 text-sm text-gray-light hover:border-l-2 hover:border-primary"
-                    onClick={() => setIsUserMenuOpen(false)}
+                    onClick={closeUserMenu}
                   >
                     Fechar Sessão
                   </Link>
