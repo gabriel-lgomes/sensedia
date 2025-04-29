@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useMemo } from "react";
 import Search from "../Search/Search";
 import UserRow from "../UserRow/UserRow";
 import { useUsersList } from "@/app/hooks/useUsersList";
@@ -10,9 +10,21 @@ export default function Table() {
   const { users, isLoading } = useUsersList();
   const { mutate: deleteUser } = useDeleteUser();
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   function handleUserDeleted(id: string) {
     deleteUser(id);
   }
+
+  const filteredUsers = useMemo(() => {
+    if (!users) return [];
+    const term = searchTerm.toLowerCase();
+    return users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(term) ||
+        user.email.toLowerCase().includes(term)
+    );
+  }, [users, searchTerm]);
 
   if (isLoading) {
     return (
@@ -25,7 +37,7 @@ export default function Table() {
   return (
     <section>
       <h2 className="text-2xl">Usuários</h2>
-      <Search />
+      <Search value={searchTerm} onChange={setSearchTerm} />
       <div className="relative overflow-x-auto mt-8">
         <div className="w-full">
           <div className="hidden md:flex text-sm text-gray-50 uppercase border-t border-b border-gray-25 px-2">
@@ -38,13 +50,19 @@ export default function Table() {
             <div className="w-1/12 py-3 text-center">Álbuns</div>
           </div>
 
-          {users?.map((user) => (
+          {filteredUsers.map((user) => (
             <UserRow
               key={user.id}
               {...user}
               onUserDeleted={handleUserDeleted}
             />
           ))}
+
+          {filteredUsers.length === 0 && (
+            <div className="text-center text-gray-400 py-8">
+              Nenhum usuário encontrado.
+            </div>
+          )}
         </div>
       </div>
     </section>
