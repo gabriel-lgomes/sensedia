@@ -6,6 +6,7 @@ import { IFormUser } from "@/app/interfaces/FormUser";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useCreateUser } from "@/app/hooks/useCreateUser";
+import Button from "../Button/Button";
 
 export default function Form() {
   const { mutateAsync: createUser, isPending } = useCreateUser();
@@ -87,13 +88,14 @@ export default function Form() {
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          className="mt-6 bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark"
-          disabled={isPending}
-        >
-          {isPending ? "Salvando..." : "Salvar"}
-        </button>
+        <div className="flex gap-2">
+          <Button type="submit" typeButton="primary" disabled={isPending}>
+            {isPending ? "Salvando..." : "Registrar"}
+          </Button>
+          <Button type="submit" typeButton="secondary" onClick={() => reset()}>
+            Cancelar
+          </Button>
+        </div>
       </form>
     </div>
   );
