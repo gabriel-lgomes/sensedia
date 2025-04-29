@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { FaCaretRight, FaRegQuestionCircle } from "react-icons/fa";
+import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoMdApps } from "react-icons/io";
+import Breadcrumb from "../Breadcrumb/Breadcrumb";
 
 export default function Header() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -29,22 +30,8 @@ export default function Header() {
       </div>
       <div className="container mx-auto">
         <div className="flex items-center justify-between lg:px-0 px-4">
-          <div className="flex gap-2 items-center">
-            <Image
-              src="/sensedia.svg"
-              alt="Sensedia Logo"
-              width={27}
-              height={27}
-            />
-            <h1 className="text-sm text-primary uppercase font-medium">
-              Bem-vindo
-            </h1>
-            <span className="text-gray-25 text-xs">
-              <FaCaretRight />
-            </span>
-            <span className="text-sm font-medium text-gray-75">Registro</span>
-          </div>
-
+          {/* Breadcrumb */}
+          <Breadcrumb />
           {/* Nav menu */}
           <div className="lg:flex items-center justify-end px-2 py-4 gap-8">
             <div className="lg:flex hidden gap-4">
