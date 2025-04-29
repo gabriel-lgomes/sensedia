@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useUserPosts } from "@/app/hooks/usePosts";
 import { useUserAlbums } from "@/app/hooks/useAlbums";
+import Link from "next/link";
 
 interface UserRowProps {
   id: string;
@@ -48,43 +49,57 @@ export default function UserRow({ id, name, email }: UserRowProps) {
       onMouseLeave={() => setShowDelete(false)}
     >
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6 font-bold truncate">
-        <span className="md:hidden font-semibold">User:</span> {id}
+        <Link href={`/user/${id}`}>
+          <span className="md:hidden font-semibold">User:</span> {id}
+        </Link>
       </div>
 
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-2/6 truncate pr-2">
-        <span className="md:hidden font-semibold">Nome:</span> {name}
+        <Link href={`/user/${id}`}>
+          <span className="md:hidden font-semibold">Nome:</span> {name}
+        </Link>
       </div>
 
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-2/6 truncate pr-2">
-        <span className="md:hidden font-semibold">E-mail:</span> {email}
+        <Link href={`/user/${id}`}>
+          <span className="md:hidden font-semibold">E-mail:</span> {email}
+        </Link>
       </div>
 
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
-        <span className="md:hidden font-semibold">Cidade:</span>
-        {city}
+        <Link href={`/user/${id}`}>
+          <span className="md:hidden font-semibold">Cidade:</span>
+          {city}
+        </Link>
       </div>
 
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/6">
-        <span className="md:hidden font-semibold">Dias:</span>
-        {weekdays}
+        <Link href={`/user/${id}`}>
+          <span className="md:hidden font-semibold">Dias:</span>
+          {weekdays}
+        </Link>
       </div>
 
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/12 text-center">
-        <span className="md:hidden font-semibold">Posts:</span>
-        {postsError ? (
-          <span className="text-red-400">Erro</span>
-        ) : (
-          posts?.length ?? 0
-        )}
+        <Link href={`/user/${id}`}>
+          <span className="md:hidden font-semibold">Posts:</span>
+          {postsError ? (
+            <span className="text-red-400">Erro</span>
+          ) : (
+            posts?.length ?? 0
+          )}
+        </Link>
       </div>
 
       <div className="flex md:block justify-between py-2 md:py-6 w-full md:w-1/12 text-center">
-        <span className="md:hidden font-semibold">Álbuns:</span>
-        {albumsError ? (
-          <span className="text-red-400">Erro</span>
-        ) : (
-          albums?.length ?? 0
-        )}
+        <Link href={`/user/${id}`}>
+          <span className="md:hidden font-semibold">Álbuns:</span>
+          {albumsError ? (
+            <span className="text-red-400">Erro</span>
+          ) : (
+            albums?.length ?? 0
+          )}
+        </Link>
       </div>
 
       {showDelete && (
