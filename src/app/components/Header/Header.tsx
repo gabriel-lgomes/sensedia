@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { FaRegQuestionCircle } from "react-icons/fa";
 import { IoMdApps } from "react-icons/io";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
+import { useMockUser } from "@/app/hooks/useMockUser";
 
 export default function Header() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
@@ -29,6 +30,18 @@ export default function Header() {
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, [isUserMenuOpen]);
+
+  function getInitials(name: string) {
+    return name
+      .split(" ")
+      .map((n) => n[0])
+      .join("")
+      .toUpperCase();
+  }
+
+  const { data: user } = useMockUser();
+
+  const initials = user?.name ? getInitials(user.name) : "UN";
 
   return (
     <header className="fixed top-0 z-50 w-full h-44 bg-white">
@@ -73,10 +86,10 @@ export default function Header() {
                     onClick={toggleUserMenu}
                   >
                     <span className="flex items-center justify-center h-10 w-10 rounded-full bg-primary-50 text-white">
-                      UN
+                      {initials}
                     </span>
                     <span className="text-gray-75 font-medium hover:text-primary transition-all">
-                      Nome de usuário
+                      {user?.name || "Usuário"}
                     </span>
                   </button>
                 </li>
